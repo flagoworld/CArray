@@ -21,11 +21,13 @@ Array *_arr_new()
 
 void _arr_delete(Array *arr,void (*handler)(void *ob))
 {
-    for(int i=0;i<arr->count;++i)
+    if(handler)
     {
-        if(handler)
-            handler(arr->items[i]);
-//        free(arr->items[i]);
+        for(int i=0;i<arr->count;++i)
+        {
+            if(handler)
+                handler(arr->items[i]);
+        }
     }
     free(arr->items);
     free(arr);
@@ -50,13 +52,6 @@ void _arr_remove(Array *arr,int pos,int length,void (*handler)(void *ob))
         for(int i=pos;i<pos+length;++i)
         {
             handler(arr->items[i]);
-//            free(arr->items[i]);
-        }
-    }else
-    {
-        for(int i=pos;i<pos+length;++i)
-        {
-//            free(arr->items[i]);
         }
     }
     
